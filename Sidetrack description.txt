@@ -1,0 +1,3 @@
+
+->Our website is hosted on Firebase, a Google Cloud platform, which facilitates file uploads and downloads, as well as data retrieval.
+->We are now considering the integration of a subscription plan tailored for universities and schools. This initiative aims to empower students by enabling them to share courses and gain a visual representation of their learning experiences.
