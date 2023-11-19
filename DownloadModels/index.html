@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Home</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="index.css">
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    </head>
+    <body>
+      <div class="sus">
+        <div class="imagine">
+            <img src="../res/logo.png"></img>
+        </div>
+        <div class="butoan">
+          <button id="1"><a href="../index.html">HOME</a></button></a>
+          <button id="6"><a href="../mainpage/mainpage.html">EXPLORE</a></button>
+          <button id="2" class="active"><a href="../DownloadModels/index.html">DOWNLOAD</a></button>
+            <button id="3"><a href="../UploadModel/upload.html">UPLOAD</a></button>
+            <button id="4"><a href="../MyModels/mymodels.html">MY MODELS</a></button>
+            <button id="logout"><a href="#">LOGOUT</a></button>
+
+        </div>
+    </div>
+        
+          
+
+          <div id="data-model" class="model" style="display: none;">
+            <p class="text"> <span class="name"></span></p>
+            <button class="download-button" data-file-id="file1"></button>
+            <p class="text2">File type: <span class="type"></span></p>
+            <p class="text2">Description: <span class="description"></span></p>
+        </div>
+        
+        
+        <div id="big_container">
+          <div id="data-container">
+            <!-- Data will be added here dynamically -->
+            
+
+          </div>
+        </div>
+          
+        
+          <script type="module">
+            // Import the functions you need from the SDKs you need
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
+import { getDatabase, set, ref } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_AUTH_DOMAIN",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_STORAGE_BUCKET",
+  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+  databaseURL: "YOUR_DATABASE_URL",
+  appId: "YOUR_APP_ID",
+  measurementId: "YOUR_MEASUREMENT_ID"
+};
+
+          
+            // Initialize Firebase
+            const app = initializeApp(firebaseConfig);
+            const database=getDatabase(app);
+            const auth = getAuth();
+            const storage = getStorage(app); // Initialize Firebase Storage
+
+            // Assuming you have a logout link
+// Assuming you have a logout link
+const logoutLink = document.getElementById('logout');
+
+if (logoutLink) {
+  logoutLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    signOut(auth)
+      .then(() => {
+        // Redirect to the login page
+        window.location.replace('../SignIn/signin.html');
+        // Remove the current page from the browser's history
+        window.history.replaceState({}, document.title, '../SignIn/signin.html');
+      })
+      .catch((error) => {
+        console.error('Error signing out:', error);
+      });
+  });
+} else {
+  console.error('Logout link not found.');
+}
+
+
+const dataRef = ref(database, 'Files');
+
+
+console.log('Storage Reference:', storageRef);
+// Add event listeners to all download buttons
+function fetchData2() {
+    get(dataRef).then((snapshot) => {
+        if (snapshot.exists()) {
+            var container = document.getElementById('data-container');
+            container.innerHTML = ''; // Clear previous data
+
+            snapshot.forEach((childSnapshot) => {
+                var name = childSnapshot.child('name').val();
+                var price = childSnapshot.child('price').val();
+                var type=childSnapshot.child('type').val();
+
+                var model = document.getElementById('data-model').cloneNode(true);
+                model.style.display = 'block';
+                model.querySelector('.name').textContent = name;
+                model.querySelector('.description').textContent = price;
+                model.querySelector('.type').textContent=type;
+
+                container.appendChild(model);
+            });
+
+            // Add event listeners to all download buttons
+            const downloadButtons = container.querySelectorAll('.download-button');
+            downloadButtons.forEach((button) => {
+    button.addEventListener('click', (event) => {
+        // Get the associated div for this button
+        const parentDiv = event.target.closest('.model');
+
+        if (parentDiv) {
+            // Extract the filename (assuming it's in a specific element within the div)
+            const filename = parentDiv.querySelector('.name').textContent;
+
+            // Construct the file path based on the filename
+            const fileId = 'Files/' + filename; // Assuming 'Files/' is the correct path
+
+            // Create a reference to the file in Firebase Storage
+            const storageReference = storageRef(storage, fileId);
+
+            // Get the download URL for the file
+            getDownloadURL(storageReference)
+                .then((url) => {
+                    // Create an invisible anchor element for downloading
+                    const a = document.createElement('a');
+                    a.style.display = 'none';
+                    document.body.appendChild(a);
+
+                    // Set the anchor's attributes for downloading
+                    a.href = url;
+                    a.download = filename; // Set the downloaded filename
+
+                    // Trigger a click event on the anchor to start the download
+                    a.click();
+
+                    // Remove the anchor from the DOM
+                    document.body.removeChild(a);
+                })
+                .catch((error) => {
+                    console.error("Error downloading file:", error);
+                });
+        }
+    });
+});
+
+
+        } else {
+            console.log("No data available");
+        }
+    }).catch((error) => {
+        console.error("Error fetching data:", error);
+    });
+}
+
+fetchData2();
+
+
+          </script>
+    </body>
+</html>

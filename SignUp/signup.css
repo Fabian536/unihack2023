@@ -1,0 +1,83 @@
+body {
+    background-color: rgb(29, 26, 26);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.signupcontainer{
+    background-color: rgb(235, 228, 228);
+    margin-top: 20vh;
+    border-radius: 15px;
+    width: 60%;
+    border: 1px solid #000000;
+    padding: 20px; /* Adjust the padding to center the content */
+    max-width: 800px;
+}
+.form{
+    width: 30vw;
+    padding-left:20px;
+    height:5vh;
+    flood-opacity: calc(100%);
+background-color: white;
+    border: none;
+    display: flex;
+    color: rgb(0, 0, 0);
+    margin-top: 10px;
+    border-radius: 8px;
+    margin-right: auto;
+    margin-left: auto;
+}
+#title{
+    text-align: center;
+    color: black;
+        display: flex;
+        font-size: 60px;
+    align-items: center; /* Center vertically */
+    justify-content: center; /* Center horizontally */
+}
+#butoane{
+    margin-top: 3vh;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+
+
+}
+.submitbutton{
+    width: 10vw;
+    
+    background-color:rgb(235, 228, 228);
+    height:5vh;
+    border: 0.5px solid #000000;
+    border-radius: 4px;
+
+
+}
+
+
+
+.submitbutton:hover{
+    background-color: #000000;
+    color:white;
+}
+#gosignin {
+    width: 10vw;
+    margin-left: 8%;
+    background-color:black;
+    height: 5vh;
+    color: white;
+   
+
+    border: 0.5px solid #000000;
+    border-radius: 4px;
+
+    
+}
+
+#gosignin:hover {
+    background-color: rgb(235, 228, 228);
+    color: black;
+}

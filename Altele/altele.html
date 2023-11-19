@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Home</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="altele.css">
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    </head>
+    <body>
+      <div class="dropdown">
+        <button class="dropbtn" id="userimage"> 
+          <i class="fa fa-caret-down"></i>
+        </button>
+        
+      </div>
+    <ul id="taskbar">
+        <li><a href="../index.html"><img id="bar" src="../res/home.svg"></img></a></li>
+        <li ><a href="../DownloadModels/index.html"><img id="bar" src="../res/uploadimage.svg"></img></a></li>
+        <li><a href="../Contact/contact.html"><img id="bar" src="../res/contactimage.svg"></img></a></li>
+        <li id="active"><a href="../Altele/altele.html"><img id="bar" src="../res/mic.svg"></img></a></li>
+        <li><a href="../UploadModel/upload.html"><img id="bar" src="../res/upload.svg"></img></a></li>
+        <li><a href="../MyModels/mymodels.html"><img id="bar" src="../res/folder.svg"></img></a></li>
+      <li><a href="#" id="logout"><img id="bar" src="../res/logout.svg"></img></a></li>
+
+        
+      </ul>
+      <div id="big_container">
+          <button id="startStopButton"><img id="mic" src="../res/mic.svg"></img></button>
+          <button id="downloadButton" disabled>Download Beat</button></div>
+          
+          <script src="https://cdn.rawgit.com/mattdiamond/Recorderjs/08e7abd9/dist/recorder.js"></script>
+          <script>
+            document.addEventListener('DOMContentLoaded', () => {
+              const startStopButton = document.getElementById('startStopButton');
+              const downloadButton = document.getElementById('downloadButton');
+        
+              let isRecording = false;
+              let audioContext;
+              let recorder;
+              let currentInstrument = 'drums'; 
+        
+              const gainNode = (audioContext && audioContext.createGain()) || null;
+  if (gainNode) {
+    gainNode.gain.value = 1.0; // Adjust the volume (1.0 is full volume)
+  }
+
+              const instrumentSounds = {
+                'drums': '../sound_effects/drums/drums1.mp3',
+                'synth': '../sound_effects/guitar/extreme_guitar.mp3',
+                'soundEffect1': 'path/to/soundEffect1.mp3',
+                'soundEffect2': 'path/to/soundEffect2.mp3',
+              };
+        
+              startStopButton.addEventListener('click', () => {
+                if (!isRecording) {
+                  startRecording();
+                } else {
+                  stopRecording();
+                }
+              });
+        
+              
+        
+              downloadButton.addEventListener('click', () => {
+                if (recorder) {
+                  recorder.exportWAV((blob) => {
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    document.body.appendChild(a);
+                    a.style = 'display: none';
+                    a.href = url;
+                    a.download = 'beat.mp3';
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                  });
+                }
+              });
+        
+              function startRecording() {
+    isRecording = true;
+    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    
+    if (audioContext) {
+      const streamPromise = navigator.mediaDevices.getUserMedia({ audio: true });
+
+      streamPromise.then((stream) => {
+        const input = audioContext.createMediaStreamSource(stream);
+        
+        // Connect the input to the gain node before recording
+        if (gainNode) {
+          input.connect(gainNode);
+          gainNode.connect(audioContext.destination);
+        }
+
+        recorder = new Recorder(input);
+        recorder.record();
+      })
+      .catch((error) => {
+        console.error('Error accessing microphone:', error);
+        isRecording = false;
+      });
+
+      startStopButton.style.backgroundColor = '#FFFFFF';
+      downloadButton.disabled = true;
+    } else {
+      console.error('AudioContext not supported');
+    }
+  }
+        
+              function stopRecording() {
+                isRecording = false;
+                recorder.stop();
+                audioContext.close().then(() => {
+      startStopButton.style.backgroundColor = '#f00b51';
+                  downloadButton.disabled = false;
+                });
+              }
+        
+              // Function to play the selected instrument sound
+              function playInstrument() {
+                const audio = new Audio(instrumentSounds[currentInstrument]);
+                audio.play();
+              }
+              function setMicrophoneVolume(volume) {
+    if (gainNode) {
+      gainNode.gain.value = volume;
+    }
+  }
+        
+              // Listen for the beat and play the selected instrument sound
+              setInterval(() => {
+                if (isRecording) {
+                }
+              }, 7000); // Adjust the interval based on your preference
+            });
+          </script>
+          <script type="module">
+            // Import the functions you need from the SDKs you need
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
+import { getDatabase, set, ref } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_AUTH_DOMAIN",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_STORAGE_BUCKET",
+  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+  databaseURL: "YOUR_DATABASE_URL",
+  appId: "YOUR_APP_ID",
+  measurementId: "YOUR_MEASUREMENT_ID"
+};
+
+          
+            // Initialize Firebase
+            const app = initializeApp(firebaseConfig);
+            const database=getDatabase(app);
+            const auth = getAuth();
+            // Assuming you have a logout link
+// Assuming you have a logout link
+const logoutLink = document.getElementById('logout');
+
+if (logoutLink) {
+  logoutLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    signOut(auth)
+      .then(() => {
+        // Redirect to the login page
+        window.location.replace('../SignIn/signin.html');
+        // Remove the current page from the browser's history
+        window.history.replaceState({}, document.title, '../SignIn/signin.html');
+      })
+      .catch((error) => {
+        console.error('Error signing out:', error);
+      });
+  });
+} else {
+  console.error('Logout link not found.');
+}
+
+
+
+    
+    
+          </script>
+    </body>
+</html>

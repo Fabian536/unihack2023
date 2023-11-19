@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Home</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="upload.css">
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    </head>
+    <body>
+      <div class="sus">
+        <div class="imagine">
+            <img src="../res/logo.png"></img>
+        </div>
+        <div class="butoan">
+          <button id="1"><a href="../index.html">HOME</a></button></a>
+          <button id="6"><a href="../mainpage/mainpage.html">EXPLORE</a></button>
+          <button id="2"><a href="../DownloadModels/index.html">DOWNLOAD</a></button>
+            <button id="3" class="active"><a href="../UploadModel/upload.html">UPLOAD</a></button>
+            <button id="4"><a href="../MyModels/mymodels.html">MY MODELS</a></button>
+            <button id="logout"><a href="#">LOGOUT</a></button>
+
+        </div>
+    </div>
+        
+      </ul>
+        </div>
+        <div id="bigcontainer">
+          <div id="enterdetails">
+            <h1 id="title">Model name</h1>
+            <input class="input" type="text" id="assetname" placeholder="Enter file name">
+            <h1 id="title">Short Description</h1>
+            <input class="input"  type="text" id="price" placeholder="Enter a short description">
+            <input type="file" id="file" name="fileButton" style="margin-top:40px;">
+            <button id="uploadbutton">UPLOAD</button>
+            </div>
+          </div>
+
+          
+          
+        
+          <script type="module">
+            // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
+        import { getStorage, ref as storageRef, uploadBytes } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-storage.js";
+        import { getAuth, createUserWithEmailAndPassword ,signOut} from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
+        import { getDatabase,set,ref,get } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
+
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+      
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_AUTH_DOMAIN",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_STORAGE_BUCKET",
+  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+  databaseURL: "YOUR_DATABASE_URL",
+  appId: "YOUR_APP_ID",
+  measurementId: "YOUR_MEASUREMENT_ID"
+};
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const database=getDatabase(app);
+        const auth = getAuth();
+        const storage = getStorage(app);
+
+        
+
+        document.getElementById('uploadbutton').addEventListener('click', function () {
+          var name=document.getElementById('assetname').value;
+            var price=document.getElementById('price').value;
+    let fileInput = document.getElementById('file');
+    let file = fileInput.files[0]; 
+    if (!name || !price) {
+    alert("Please fill in all required fields");
+    return;
+  }
+
+
+
+  if (!file) {
+    alert("No file chosen");
+    return;
+  }
+  const fileType = getFileTypeFromExtension(file.name);
+
+  if (!fileType) {
+    alert("Unsupported file type");
+    return;
+  }
+  const nameRef = ref(database, 'Files/' + name);
+  get(nameRef)
+    .then((snapshot) => {
+      if (snapshot.exists()) {
+        alert('A file with the same name already exists.');
+      }
+
+  else{
+            let storageFileRef = storageRef(storage, "Files/" + (name+fileType));
+        set(ref(database,'Files/'+name),{
+        name:(name+fileType),
+        price:price,
+        type:fileType
+    })
+    var user = auth.currentUser;
+
+    if (!user) {
+        alert("User is not signed in.");
+        return;
+    }
+
+    var uid = user.uid;
+          set(ref(database,"users/"+uid+"/uploadedfiles/"+name),{
+        name:(name+fileType),
+        price:price,
+    })
+        
+        // Upload file to Firebase Storage
+        uploadBytes(storageFileRef, file).then((snapshot) => {
+          console.log('File uploaded successfully:', snapshot);
+    
+    // Show the success message
+    alert("File uploaded succesfully");
+      window.location.replace('../index.html');
+
+    
+    // You can also clear the form or perform other actions here
+    document.getElementById('assetname').value = '';
+    document.getElementById('price').value = '';
+    document.getElementById('file').value = ''; // Clear the file input
+  
+        }).catch((error) => {
+            console.error('Error uploading file:', error);
+        });
+      }});
+    
+});
+// Assuming you have a logout link
+const logoutLink = document.getElementById('logout');
+
+if (logoutLink) {
+  logoutLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    signOut(auth)
+      .then(() => {
+        // Redirect to the login page
+        window.location.replace('../SignIn/signin.html');
+        // Remove the current page from the browser's history
+        window.history.replaceState({}, document.title, '../SignIn/signin.html');
+      })
+      .catch((error) => {
+        console.error('Error signing out:', error);
+      });
+  });
+} else {
+  console.error('Logout link not found.');
+};
+function getFileTypeFromExtension(fileName) {
+  const extension = fileName.split('.').pop().toLowerCase();
+  switch (extension) {
+    case 'xlsx':
+      return '.xlsx';
+    case 'txt':
+      return '.txt';
+    case 'png':
+      return '.png';
+    case 'docx':
+      return '.docx';
+    case 'pdf':
+      return '.pdf';
+    case 'jpg':
+      return '.jpg';
+    case 'jpeg':
+      return '.jpeg';
+    case 'gif':
+      return '.gif';
+    case 'mp4':
+      return '.mp4';
+    case 'mp3':
+      return '.mp3';
+    // Add more file extensions and corresponding types as needed
+    default:
+      return 'Unknown';
+  }
+}
+
+
+
+        </script>
+    </body>
+</html>

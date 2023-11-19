@@ -1,0 +1,126 @@
+body {
+    background-color: rgb(29, 26, 26);
+    display: flex;
+    flex-direction: row;
+    overflow: hidden; /* Hide overflow */
+}
+
+
+
+.signincontainer{
+    background-color: rgb(235, 228, 228);
+    position: absolute;
+    right: 9vw;
+    top: 17vh;
+    border-radius: 15px;
+    width: 30vw;
+    height: 85vh;
+    border: 1px solid #000000;
+    padding: 20px; /* Adjust the padding to center the content */
+    box-sizing: border-box; 
+    max-height: fit-content;
+    display: inline-block;
+}
+.form{
+    width: 20vw;
+    padding-left:20px;
+    height:7vh;
+    flood-opacity: calc(100%);
+    border-radius: 8px;
+    display: flex;
+    color: rgb(0, 0, 0);
+    margin-top: 10px;
+    margin-right: auto;
+    margin-left: 2vw;
+    border: none;
+    outline: none;
+    color: rgb(0, 0, 0);
+    
+}
+#title{
+    text-align: left;
+    font-size: 40px;
+    color: black;
+    margin-left: 2vw;
+    margin-bottom: 5vh;
+    font-family: Arial, Helvetica, sans-serif; 
+}
+#logininfo{
+    text-align: left;
+    font-size: 15px;
+    color: black;
+    margin-left: 2vw;
+    margin-top: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    margin-bottom: 6vh;
+}
+
+#butons{
+    margin-top: 6vh;
+    width: 100%;
+    display: flex;
+    justify-content: center; /* Aliniază elementele în centru pe axa principală (orizontală) */
+    align-items: center; 
+}
+
+.submitbutton{
+    background-color:rgb(235, 228, 228);
+    height:7vh;
+
+    border: 0.5px solid #000000;
+    border-radius: 4px;
+    margin: 15%;
+    width: 50%;
+    flex-basis: 0.2;    
+
+}
+.submitbutton:hover{
+    background-color: #000000;
+    color:white;
+}
+#gosignup {
+    width: 50%;
+    height: 7vh;
+    margin-right: 15%;
+    background-color:black;
+    border: 0.5px solid black;
+    border-radius: 4px;
+    display: inline-block;
+    color: white;
+}
+
+#gosignup:hover {
+    background-color: rgb(235, 228, 228);
+    color:black;
+}
+
+#numecompanie {
+    color: white;
+    position: relative;
+    margin-top: 34vh;
+    margin-left: 10vw ;
+    font-size: xx-large;
+}
+
+#detaliicompanie{
+    display: flex;
+    width: 35vw;
+    margin-left: 10vw ;
+    font-size: medium;
+    margin-top: 7vh;
+    color: rgb(238, 226, 226);
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 100 !important;
+    font-size: small;
+}
+
+#contact{
+    white-space: pre-line;
+    color: white;
+    margin-left: 10svw ;
+    position: relative;
+    margin-top: 36vh;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 300;
+}
+

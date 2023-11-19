@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Home</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="news.css">
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    </head>
+    <body>
+        <div class="dropdown">
+            <button class="dropbtn" id="userimage"> 
+              <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+              <a href="#" id="logout">Log out</a>
+              <a href="../MyModels/mymodels.html">My assets</a>
+              <a href="../UploadModel/upload.html">Upload Model</a>
+            </div>
+          </div>
+        <ul>
+            <li><a href="../index.html">Home</a></li>
+            <li id="active"><a href="./news.html">News</a></li>
+            <li><a href="../Contact/contact.html">Contact</a></li>
+            <li><a href="../Altele/altele.html">Altele</a></li>
+
+            
+          </ul>
+          
+        
+          <script type="module">
+            // Import the functions you need from the SDKs you need
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
+import { getDatabase, set, ref } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_AUTH_DOMAIN",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_STORAGE_BUCKET",
+  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+  databaseURL: "YOUR_DATABASE_URL",
+  appId: "YOUR_APP_ID",
+  measurementId: "YOUR_MEASUREMENT_ID"
+};
+
+          
+            // Initialize Firebase
+            const app = initializeApp(firebaseConfig);
+            const database=getDatabase(app);
+            const auth = getAuth();
+            // Assuming you have a logout link
+// Assuming you have a logout link
+const logoutLink = document.getElementById('logout');
+
+if (logoutLink) {
+  logoutLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    signOut(auth)
+      .then(() => {
+        // Redirect to the login page
+        window.location.replace('../SignIn/signin.html');
+        // Remove the current page from the browser's history
+        window.history.replaceState({}, document.title, '../SignIn/signin.html');
+      })
+      .catch((error) => {
+        console.error('Error signing out:', error);
+      });
+  });
+} else {
+  console.error('Logout link not found.');
+}
+
+
+    
+    
+          </script>
+    </body>
+</html>

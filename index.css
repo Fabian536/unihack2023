@@ -1,0 +1,317 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: rgb(29, 26, 26);
+  background-repeat: no-repeat;
+  background-position: center center;
+  color: white;
+  background-size: cover;
+  height: 100vh;
+
+  overflow-y: scroll; 
+
+}
+
+ul {
+  list-style-type: none;
+  margin-right: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #000000;
+  display: flex;
+  justify-content: flex-end;
+}
+#data-model {
+  display: none;
+  width: auto;
+  margin-left: 100px;
+  align-items: center;
+  text-align: center;
+  background-color: #ffffff; /* Set background opacity to 75% */
+  
+  justify-content: center;
+  height: fit-content;
+  border-color: #f00b51;
+  padding-bottom: 40px;
+  border-radius: 7px;
+  margin-bottom: 30px;
+  color: #020202; /* Set the text color to white or your desired text color */
+}
+
+
+#big_container {
+  height: fit-content;
+  background-repeat: no-repeat;
+  width: auto;
+  padding:30px;
+  margin-top:200px;
+  margin-left: 15%;
+  margin-right: 15%;
+  background-color: transparent;
+
+  display: flex;
+  align-items: center;
+  flex-direction: column; 
+  padding-bottom: 20px;
+
+  
+}
+#all {
+  width: 80%;
+  right:0;
+  height: auto;
+  transform: rotate(2deg);
+}
+
+
+#data-container {
+  max-height: auto; /* Adjust the height as needed */
+  width: 100%;
+  margin-top: 1px;
+  margin-bottom: 30px;
+  padding: 10px;
+  background-color: transparent;
+  margin-left: auto;
+}
+#loadMoreButton{
+  max-height: auto; /* Adjust the height as needed */
+  width: 30%;
+  height:100px;
+  margin-bottom: 70px;
+  border-radius: 10px;
+  padding: 10px;
+  background-color: #3066BE;
+}
+.model {
+  position: relative;
+  border: 1px solid #f00b51;
+  padding: 10px;
+  margin: 10px;
+  background-color: #f9f9f9;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
+}
+
+.model .name {
+  font-weight: bold;
+  font-size: 30px;
+}
+
+.model .price {
+  font-size: 15px;
+  color: #ffffff;
+}
+.text{
+  font-size: 30px;
+}
+.text2{
+  font-size: 15px;
+  margin-top: 10px;
+  text-align: left;
+}
+li {
+  align-items: center;
+  float: bottom;
+  height:15%;
+  border-radius: 5px;
+  
+}
+#bar{
+  height:100%;
+  padding-bottom: 30px;
+  padding-top: 30px;
+  width:auto;
+  margin:auto;
+}
+
+li a {
+  display: block;
+  color: rgb(0, 0, 0);
+  text-align: center;
+  align-items: center;
+  width:100%;
+  height:100%;
+  text-decoration: none;
+}
+
+
+
+.sus{
+  display: flex;
+  color: white;
+  background-color: rgb(0, 0, 0);
+  position: absolute;
+  width: 100%;
+  height: fit-content;
+  flex-direction: column;
+
+}
+
+.imagine{
+padding: 10px;
+  width: 10vw;
+}
+img{
+
+  width: 30vw;
+  height: auto;
+  max-width: 400px;
+}
+
+.butoan{
+  display: flex;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  justify-content: space-between;
+  background-color:rgb(235, 228, 228) ;
+}
+
+button{
+  flex: 1;
+  margin-left: 3.5%;
+  margin-right: 3.5%;
+  height: 4vh;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: small;
+  font-weight: 500;
+  background-color: rgb(235, 228, 228);
+  border: none;
+  border-radius: 8px;
+  margin-top: 0.5%;
+
+
+}
+a{
+text-decoration: none;
+}
+
+button:hover {
+
+color: brown;
+font-size: large;
+}
+
+
+
+
+
+
+
+.active {
+
+color: brown;
+font-size: large;
+
+
+}
+
+
+
+
+li a:hover {
+  background-color: #ffffff2a;
+  color: white;
+}
+
+#active {
+  background-color: #ffffff77;
+  color: white;
+}
+
+#userimage {
+  position: fixed;
+  background-image: url("./res/logo.png");
+  background-size: cover;
+  height: 100px;
+  right:0;
+
+  width: 400px;
+  margin-right: auto;
+}
+#userimageli{
+  align-self: flex-start;
+}
+#taskbar{
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  width:100px;
+  height:100%;
+  top:0;
+  left:0;
+}
+.dropdown-content a:hover {
+  background-color: rgb(0, 0, 0)
+}
+#chestii{
+  margin-top: 100px;
+  display: flex;
+  flex-direction: row;
+  left:0;
+  width:100%;
+  height:100%
+}
+.download-button{
+  position: absolute;
+  top: 18px;
+  right:10px;
+  align-self: flex-end;
+  background-color: #f00b51;
+  border-radius: 7px;
+  background-image: url("./res/more.svg");
+  background-size: 100%,100%; /* Adjust the size of the background image */
+  background-repeat: no-repeat;
+  background-position: center center; /* Center the image within the button */
+  height:60px;
+  border-radius: 50%;
+  border-style: none;
+  width:60px
+}
+.download-button:hover{
+  background-color: white;
+}
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropbtn {
+  background-color: red;
+}
+
+.dropdown-content {
+  display: none;
+  position: relative;
+  background-color: #3066BE;
+  color:white;
+  width: 160px;
+  z-index: 1;
+}
+
+.dropdown-content a {
+  float: none;
+  color: rgb(255, 255, 255);
+  padding: 12px 16px;
+
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.dropdown {
+  position: absolute;
+  margin-top:2.5px;
+  margin-right: auto; /* Pushes the dropdown to the right */
+}
+
+.dropdown .dropbtn {
+  font-size: 16px;
+  border: none;
+  outline: none;
+  color: white;
+  padding: 14px 16px;
+  background-color: inherit;
+  font-family: inherit;
+  margin: 0;
+}
